@@ -148,7 +148,7 @@ class _BodyState extends State<_Body> {
           children: [
             const Flexible(flex: 1, child: Text("POB代理支持")),
             Padding(
-              padding: const EdgeInsets.only(right:10),
+              padding: const EdgeInsets.only(right: 10),
               child: Checkbox(
                 value: isPobProxySupported,
                 onChanged: (bool? value) {
