@@ -2,13 +2,17 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-const testUrl = "https://poe.game.qq.com/trade";
-const getCharactersUrl =
-    "https://poe.game.qq.com/character-window/get-characters";
-const viewProfileUrlPrefix = "https://poe.game.qq.com/account/view-profile/";
-const getPassiveSkillUrl =
-    "https://poe.game.qq.com/character-window/get-passive-skills";
-const getItemsUrl = "https://poe.game.qq.com/character-window/get-items";
+const tencentPoeForumHost = "poe.game.qq.com";
+const tradePath = "/trade";
+const getCharactersPath = "/character-window/get-characters";
+const viewProfilePath = "/account/view-profile";
+const getPassiveSkillsPath = "/character-window/get-passive-skills";
+const getItemsPath = "/character-window/get-items";
+
+var tradeUri = Uri.https(tencentPoeForumHost, tradePath);
+var getCharactersUri = Uri.https(tencentPoeForumHost, getCharactersPath);
+var getPassiveSkillsUri = Uri.https(tencentPoeForumHost, getPassiveSkillsPath);
+var getItemsUri = Uri.http(tencentPoeForumHost, getItemsPath);
 
 /// The POE api-requested [http.Client].
 ///
@@ -48,7 +52,7 @@ class Requester {
   /// Return false if a network error occurs.
   Future<bool> isEffectiveSession() async {
     try {
-      var resp = await _client.get(Uri.parse(testUrl));
+      var resp = await _client.get(tradeUri);
       if (resp.statusCode == HttpStatus.ok) {
         return true;
       }
@@ -71,7 +75,7 @@ class Requester {
 
     http.Response resp;
     try {
-      resp = await _client.post(Uri.parse(getCharactersUrl), body: forumData);
+      resp = await _client.post(getCharactersUri, body: forumData);
     } catch (err) {
       //network error
       throw HttpRequestException(HttpStatus.badGateway);
@@ -87,8 +91,8 @@ class Requester {
   Future<String> viewProfile(String accountName) async {
     http.Response resp;
     try {
-      resp = await _client.get(Uri.parse(
-          "$viewProfileUrlPrefix${Uri.encodeComponent(accountName)}"));
+      resp = await _client.get(Uri.https(tencentPoeForumHost,
+          "$viewProfilePath/${Uri.encodeComponent(accountName)}"));
     } catch (err) {
       //network error
       throw HttpRequestException(HttpStatus.badGateway);
@@ -110,7 +114,7 @@ class Requester {
 
     http.Response resp;
     try {
-      resp = await _client.post(Uri.parse(getPassiveSkillUrl), body: forumData);
+      resp = await _client.post(getPassiveSkillsUri, body: forumData);
     } catch (err) {
       //network error
       throw HttpRequestException(HttpStatus.badGateway);
@@ -132,7 +136,7 @@ class Requester {
 
     http.Response resp;
     try {
-      resp = await _client.post(Uri.parse(getItemsUrl), body: forumData);
+      resp = await _client.post(getItemsUri, body: forumData);
     } catch (err) {
       //network error
       throw HttpRequestException(HttpStatus.badGateway);
