@@ -89,7 +89,6 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
             VALUE "FileDescription", "poe_cn_export" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "poe_cn_export" "\0"
