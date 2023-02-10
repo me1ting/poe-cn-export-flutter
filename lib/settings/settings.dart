@@ -74,7 +74,7 @@ class SettingsManager {
   }
 
   /// Save settings to disk.
-  void save() async {
+  Future<void> save() async {
     var json = settings.toJson();
     await _settingsFile.writeAsString(jsonEncode(json));
   }
