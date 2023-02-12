@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -82,7 +83,11 @@ class Requester {
     }
 
     if (resp.statusCode == HttpStatus.ok) {
-      return resp.body;
+      var contentType = resp.headers["content-type"];
+      if (contentType != null && contentType.contains("charset")) {
+        return resp.body;
+      }
+      return utf8.decode(resp.bodyBytes);
     }
 
     throw HttpRequestException(resp.statusCode);
@@ -99,7 +104,11 @@ class Requester {
     }
 
     if (resp.statusCode == HttpStatus.ok) {
-      return resp.body;
+      var contentType = resp.headers["content-type"];
+      if (contentType != null && contentType.contains("charset")) {
+        return resp.body;
+      }
+      return utf8.decode(resp.bodyBytes);
     }
 
     throw HttpRequestException(resp.statusCode);
@@ -121,7 +130,11 @@ class Requester {
     }
 
     if (resp.statusCode == HttpStatus.ok) {
-      return resp.body;
+      var contentType = resp.headers["content-type"];
+      if (contentType != null && contentType.contains("charset")) {
+        return resp.body;
+      }
+      return utf8.decode(resp.bodyBytes);
     }
 
     throw HttpRequestException(resp.statusCode);
@@ -143,7 +156,11 @@ class Requester {
     }
 
     if (resp.statusCode == HttpStatus.ok) {
-      return resp.body;
+      var contentType = resp.headers["content-type"];
+      if (contentType != null && contentType.contains("charset")) {
+        return resp.body;
+      }
+      return utf8.decode(resp.bodyBytes);
     }
 
     throw HttpRequestException(resp.statusCode);
